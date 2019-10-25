@@ -20,14 +20,12 @@ declare(strict_types=1);
 
 namespace czechpmdevs\buildertools\schematics;
 
+use czechpmdevs\buildertools\async\BuilderToolsThread;
+use czechpmdevs\buildertools\async\object\Session;
 use czechpmdevs\buildertools\async\SchematicLoadTask;
 use czechpmdevs\buildertools\BuilderTools;
-use czechpmdevs\buildertools\editors\Editor;
-use czechpmdevs\buildertools\editors\Fixer;
 use czechpmdevs\buildertools\editors\object\BlockList;
-use pocketmine\block\Block;
 use pocketmine\math\Vector3;
-use pocketmine\nbt\BigEndianNBTStream;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\Server;
 
@@ -82,12 +80,15 @@ class Schematic {
      */
     protected $materials = "Classic";
 
-
     /**
      * Schematic constructor.
      * @param string $file
      */
     public function __construct(string $file) {
+        if(BuilderTools::getConfiguration()["custom-thread"]) {
+            BuilderTools::getAsyncWorker()->sessions[] = Session::serialize(Session::SESSION_SCHEMATIC_LOAD, $file);
+            return;
+        }
         Server::getInstance()->getAsyncPool()->submitTask(new SchematicLoadTask($file));
     }
 
@@ -101,7 +102,7 @@ class Schematic {
     /**
      * @return CompoundTag
      */
-    public function getCompoundTag(): CompoundTag {
+    private function getCompoundTag(): ?CompoundTag {
         return $this->data;
     }
 
@@ -123,7 +124,24 @@ class Schematic {
      * @return int
      */
     public function getZAxis(): int {
-        return $this->getZAxis();
+        return $this->length;
+    }
+
+    /**
+     * @param SerializedSchematic $schematic
+     */
+    public function loadFromSerialized(SerializedSchematic $schematic) {
+        $this->file = $schematic->file;
+
+        $axisVector = new Vector3(...unserialize($schematic->axis));
+        $this->width = $axisVector->getX();
+        $this->height = $axisVector->getY();
+        $this->length = $axisVector->getZ();
+
+        $this->materials = $schematic->materials;
+        $this->blockList = BlockList::unserializeList($schematic->blockList);
+
+        $this->isLoaded = true;
     }
 
     /**

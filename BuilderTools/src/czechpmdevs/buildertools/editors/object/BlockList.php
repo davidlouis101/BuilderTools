@@ -168,6 +168,45 @@ class BlockList extends BlockMap {
         $this->playerPosition = $position;
     }
 
+    /**
+     * @return string
+     */
+    public function serializeList(): string {
+        $data = [];
+
+        $data["center"] = $this->playerPosition === null ? [0, 0, 0] : [$this->playerPosition->getX(), $this->playerPosition->getY(), $this->playerPosition->getZ()];
+        $data["blocks"] = [];
+        $data["level"] = $this->level;
+        $data["save"] = $this->save;
+
+        foreach ($this->getAll() as $index => $block) {
+            $data["blocks"][$index] = [[$block->getX(), $block->getY(), $block->getZ()], [$block->getId(), $block->getDamage()]];
+        }
+
+        return serialize($data);
+    }
+
+    /**
+     * @param string $serialized
+     * @return BlockList|null
+     */
+    public static function unserializeList(string $serialized): ?BlockList {
+        $data = unserialize($serialized);
+        $list = new BlockList();
+
+        foreach ($data["blocks"] as $index => $block) {
+            $list->addBlock(new Vector3(...$block[0]), Block::get(...$block[1]));
+        }
+
+        unset($data["blocks"]);
+
+        foreach ($data as $index => $value) {
+            $list->{$index} = $value;
+        }
+
+        return $list;
+    }
+
 
     /**
      * @return array

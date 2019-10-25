@@ -20,6 +20,8 @@ declare(strict_types=1);
 
 namespace czechpmdevs\buildertools;
 
+use czechpmdevs\buildertools\async\BuilderToolsThread;
+use czechpmdevs\buildertools\commands\BiomeCommand;
 use czechpmdevs\buildertools\commands\BlockInfoCommand;
 use czechpmdevs\buildertools\commands\ClearInventoryCommand;
 use czechpmdevs\buildertools\commands\CopyCommand;
@@ -52,20 +54,14 @@ use czechpmdevs\buildertools\commands\StackCommand;
 use czechpmdevs\buildertools\commands\TreeCommand;
 use czechpmdevs\buildertools\commands\UndoCommand;
 use czechpmdevs\buildertools\commands\WandCommand;
-use czechpmdevs\buildertools\editors\Canceller;
-use czechpmdevs\buildertools\editors\Copier;
-use czechpmdevs\buildertools\editors\Decorator;
 use czechpmdevs\buildertools\editors\Editor;
-use czechpmdevs\buildertools\editors\Filler;
-use czechpmdevs\buildertools\editors\Fixer;
-use czechpmdevs\buildertools\editors\Naturalizer;
-use czechpmdevs\buildertools\editors\Printer;
-use czechpmdevs\buildertools\editors\Replacement;
 use czechpmdevs\buildertools\event\listener\EventListener;
+use czechpmdevs\buildertools\event\listener\ThreadListener;
 use czechpmdevs\buildertools\schematics\SchematicsManager;
 use pocketmine\command\Command;
 use pocketmine\item\enchantment\Enchantment;
 use pocketmine\plugin\PluginBase;
+use pocketmine\ThreadManager;
 
 /**
  * Class BuilderTools
@@ -79,9 +75,6 @@ class BuilderTools extends PluginBase {
     /** @var  string $prefix */
     private static $prefix;
 
-    /** @var  Editor[] $editors */
-    private static $editors = [];
-
     /** @var EventListener $listener */
     private static $listener;
 
@@ -94,13 +87,17 @@ class BuilderTools extends PluginBase {
     /** @var array $config */
     private static $configuration = [];
 
+    /** @var BuilderToolsThread $customThread */
+    private static $customThread;
+
     public function onEnable() {
         self::$instance = $this;
         self::$prefix = "§7[BuilderTools] §a";
         $this->initConfig();
+        $this->startCustomThread();
         $this->registerCommands();
         $this->initListner();
-        $this->registerEditors();
+        EditorManager::init();
         $this->registerEnchantment();
         self::$schematicsManager = new SchematicsManager($this);
     }
@@ -109,19 +106,16 @@ class BuilderTools extends PluginBase {
         if(!is_dir($this->getDataFolder())) {
             @mkdir($this->getDataFolder());
         }
+        if($this->getConfig()->get("config-version") != "1.2.0-beta3") {
+            $this->getLogger()->notice("BuilderTools config is outdated. Updating configuration file...");
+            rename($this->getDataFolder() . "/config.yml" , $this->getDataFolder() . "/config.yml.old");
+            $this->saveResource("/config.yml");
+            $this->getConfig()->reload();
+            $this->getLogger()->info("Config successfully updated! (Old config name changed to 'config.yml.old')");
+        }
         self::$configuration = $this->getConfig()->getAll();
     }
 
-    private function registerEditors() {
-        self::$editors["Filler"] = new Filler;
-        self::$editors["Printer"] = new Printer;
-        self::$editors["Replacement"] = new Replacement;
-        self::$editors["Naturalizer"] = new Naturalizer;
-        self::$editors["Copier"] = new Copier;
-        self::$editors["Canceller"] = new Canceller;
-        self::$editors["Decorator"] = new Decorator;
-        self::$editors["Fixer"] = new Fixer;
-    }
 
     private function initListner() {
         $this->getServer()->getPluginManager()->registerEvents(self::$listener = new EventListener, $this);
@@ -165,7 +159,8 @@ class BuilderTools extends PluginBase {
             new HollowCylinderCommand,
             new StackCommand,
             new OutlineCommand,
-            new MoveCommand
+            new MoveCommand,
+            new BiomeCommand
         ];
         foreach (self::$commands as $command) {
             $map->register("BuilderTools", $command);
@@ -173,12 +168,21 @@ class BuilderTools extends PluginBase {
         HelpCommand::buildPages();
     }
 
+    public function startCustomThread() {
+        if(self::getConfiguration()["custom-thread"]) {
+            self::$customThread = new BuilderToolsThread();
+            ThreadManager::getInstance()->add(self::$customThread);
+            self::$customThread->start(PTHREADS_INHERIT_NONE);
+            $this->getScheduler()->scheduleRepeatingTask(new ThreadListener($this), self::getConfiguration()["thread-reader-ticks"]);
+        }
+    }
+
     /**
      * @param string $name
      * @return Editor $editor
      */
     public static function getEditor(string $name): Editor {
-        return self::$editors[$name];
+        return EditorManager::getEditor($name);
     }
 
     /**
@@ -214,6 +218,13 @@ class BuilderTools extends PluginBase {
      */
     public static function getSchematicsManager(): SchematicsManager {
         return self::$schematicsManager;
+    }
+
+    /**
+     * @return BuilderToolsThread|null $customThread
+     */
+    public static function getAsyncWorker(): ?BuilderToolsThread {
+        return self::$customThread;
     }
 
     /**

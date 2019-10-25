@@ -21,6 +21,8 @@ declare(strict_types=1);
 namespace czechpmdevs\buildertools\schematics;
 
 use czechpmdevs\buildertools\BuilderTools;
+use czechpmdevs\buildertools\EditorManager;
+use czechpmdevs\buildertools\editors\Editor;
 use czechpmdevs\buildertools\editors\Filler;
 use czechpmdevs\buildertools\editors\object\BlockList;
 use pocketmine\Player;
@@ -102,7 +104,7 @@ class SchematicsManager {
         }
 
         /** @var Filler $filler */
-        $filler = new Filler();
+        $filler = BuilderTools::getEditor(Editor::FILLER);
         $filler->fill($player, $fillList);
         $player->sendMessage(BuilderTools::getPrefix() . "Schematic successfully pasted.");
     }

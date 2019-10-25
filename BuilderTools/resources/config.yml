@@ -4,7 +4,13 @@
 # /
 
 # Do not change this!
-config-version: 1.2.0
+config-version: '1.2.0-beta3'
+
+# Set to false if you want use just server thread
+custom-thread: true
+
+# You can set limit to collecting threads here, set 0 to disable
+thread-reader-ticks: 0
 
 schematics:
   # Available modes: startup, oncommand

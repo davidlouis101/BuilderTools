@@ -21,6 +21,7 @@ declare(strict_types=1);
 namespace czechpmdevs\buildertools\utils;
 
 use pocketmine\level\Position;
+use pocketmine\math\Vector2;
 use pocketmine\math\Vector3;
 
 /**
@@ -43,6 +44,14 @@ class Math {
      */
     public static function roundPosition(Position $position): Position {
         return Position::fromObject(self::roundVector3($position), $position->getLevel());
+    }
+
+    /**
+     * @param Vector3 $vector3
+     * @return Vector2
+     */
+    public static function getXZVector(Vector3 $vector3): Vector2 {
+        return new Vector2($vector3->getX(), $vector3->getZ());
     }
 
     /**

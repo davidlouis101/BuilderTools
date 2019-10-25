@@ -35,7 +35,7 @@ use pocketmine\Player;
 class BlockInfoCommand extends BuilderToolsCommand {
 
     /**
-     * ReplaceCommand constructor.
+     * BlockInfoCommand constructor.
      */
     public function __construct() {
         parent::__construct("/blockinfo", "Switch block info mode", null, ["/bi", "/debug"]);

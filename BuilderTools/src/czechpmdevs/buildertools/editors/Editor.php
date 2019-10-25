@@ -38,6 +38,8 @@ abstract class Editor {
     const NATURALIZER = "Naturalizer";
     const PRINTER = "Printer";
     const REPLACEMENT = "Replacement";
+    const BIOME_EDITOR = "BiomeEditor";
+    const SCHEMATIC_EDITOR = "SchematicEditor";
 
     /**
      * @return string
@@ -100,9 +102,7 @@ abstract class Editor {
             $block = Block::get(Block::AIR);
         }
 
-        if(!$block instanceof Block) {
-            return Block::get(Block::AIR);
-        }
+        if(!$block instanceof Block) return Block::get(Block::AIR);
 
         return $block;
     }

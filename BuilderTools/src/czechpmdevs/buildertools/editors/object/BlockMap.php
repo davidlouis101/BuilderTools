@@ -6,7 +6,7 @@ namespace czechpmdevs\buildertools\editors\object;
 
 use pocketmine\block\Block;
 use pocketmine\level\Level;
-use vixikhd\skywars\math\Vector3;
+use pocketmine\math\Vector3;
 
 /**
  * Class BlockMap
@@ -30,7 +30,7 @@ class BlockMap {
      */
     public function getBlockAt(Vector3 $vector3) {
         if(isset($this->blockMap[$vector3->getX()])) {
-            if(isset($this->blockMap[$vector3->getY()])) {
+            if(isset($this->blockMap[$vector3->getX()][$vector3->getY()])) {
                 if(isset($this->blockMap[$vector3->getX()][$vector3->getY()][$vector3->getZ()])) {
                     return $this->blockMap[$vector3->getX()][$vector3->getY()][$vector3->getZ()];
                 }

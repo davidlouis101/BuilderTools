@@ -45,7 +45,7 @@ class UnloadedSchematic extends Schematic {
     /**
      * @return CompoundTag
      */
-    public function getCompoundTag(): CompoundTag {
+    private function getCompoundTag(): CompoundTag {
         $nbt = new BigEndianNBTStream();
 
         /** @var CompoundTag $compound */
@@ -57,10 +57,7 @@ class UnloadedSchematic extends Schematic {
      * @return BlockList|null
      */
     public function getBlockList(): ?BlockList {
-        $nbt = new BigEndianNBTStream();
-
-        /** @var CompoundTag $data */
-        $data = $nbt->readCompressed(file_get_contents($this->file));
+        $data = $this->getCompoundTag();
 
         $list = new BlockList();
 
