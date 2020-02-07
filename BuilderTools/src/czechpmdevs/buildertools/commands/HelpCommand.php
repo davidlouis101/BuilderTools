@@ -40,7 +40,7 @@ class HelpCommand extends BuilderToolsCommand {
      * HelpCommand constructor.
      */
     public function __construct() {
-        parent::__construct("/commands", "Displays BuilderTools commands", null, ["/?", "buildertools", "/help"]);
+        parent::__construct("/commands", "Zeigt BuilderTools-Befehle an", null, ["/?", "buildertools", "/help"]);
     }
 
     public static function buildPages() {
