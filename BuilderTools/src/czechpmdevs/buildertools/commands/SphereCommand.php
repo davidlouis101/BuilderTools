@@ -39,7 +39,7 @@ class SphereCommand extends BuilderToolsCommand {
      * SphereCommand constructor.
      */
     public function __construct() {
-        parent::__construct("/sphere", "Create sphere", null, []);
+        parent::__construct("/sphere", "Erstellt sphere", null, []);
     }
 
     public function execute(CommandSender $sender, string $commandLabel, array $args) {
@@ -59,6 +59,6 @@ class SphereCommand extends BuilderToolsCommand {
         $printer = BuilderTools::getEditor(Editor::PRINTER);
         /** @var EditorResult $result */
         $result = $printer->makeSphere($sender, $sender, $radius, $args[0]);
-        $sender->sendMessage(BuilderTools::getPrefix()."§aSphere created in ".(string)round($result->time, 2)." (".(string)$result->countBlocks." changed)!");
+        $sender->sendMessage(BuilderTools::getPrefix()."§aSphere Erstellt in ".(string)round($result->time, 2)." (".(string)$result->countBlocks." changed)!");
     }
 }
