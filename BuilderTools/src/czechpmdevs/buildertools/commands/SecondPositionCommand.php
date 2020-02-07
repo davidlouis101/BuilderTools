@@ -37,7 +37,7 @@ class SecondPositionCommand extends BuilderToolsCommand {
      * SecondPositionCommand constructor.
      */
     public function __construct() {
-        parent::__construct("/pos2", "Select second position", null, ["/2"]);
+        parent::__construct("/pos2", "Auswahlt 2Position", null, ["/2"]);
     }
 
     public function execute(CommandSender $sender, string $commandLabel, array $args) {
@@ -48,6 +48,6 @@ class SecondPositionCommand extends BuilderToolsCommand {
             return;
         }
         Selectors::addSelector($sender, 2, $position = new Position((int)round($sender->getX()), (int)round($sender->getY()), (int)round($sender->getZ()), $sender->getLevel()));
-        $sender->sendMessage(BuilderTools::getPrefix()."§aSelected second position at {$position->getX()}, {$position->getY()}, {$position->getZ()}");
+        $sender->sendMessage(BuilderTools::getPrefix()."§aAusgewählte zweite Position bei {$position->getX()}, {$position->getY()}, {$position->getZ()}");
     }
 }
