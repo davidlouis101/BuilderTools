@@ -38,7 +38,7 @@ class BlockInfoCommand extends BuilderToolsCommand {
      * ReplaceCommand constructor.
      */
     public function __construct() {
-        parent::__construct("/blockinfo", "Switch block info mode", null, ["/bi", "/debug"]);
+        parent::__construct("/blockinfo", "Blockinfo-Modus wechseln", null, ["/bi", "/debug"]);
     }
 
     /**
@@ -59,7 +59,7 @@ class BlockInfoCommand extends BuilderToolsCommand {
             $item->setCustomName(BuilderTools::getConfiguration()["items"]["blockinfo-stick"]["name"]);
             $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment(50), 1));
             $sender->getInventory()->addItem($item);
-            $sender->sendMessage(BuilderTools::getPrefix() . "§aBlock info stick added to your inventory!");
+            $sender->sendMessage(BuilderTools::getPrefix() . "§aBlock-Info-Stick zu Ihrem Inventar hinzugefügt!");
             return;
         }
         Selectors::switchBlockInfoSelector($sender);
