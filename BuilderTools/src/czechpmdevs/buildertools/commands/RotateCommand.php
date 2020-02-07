@@ -37,7 +37,7 @@ class RotateCommand extends BuilderToolsCommand {
      * RotateCommand constructor.
      */
     public function __construct() {
-        parent::__construct("/rotate", "Rotate selected area", null, []);
+        parent::__construct("/rotate", "Dreht Die Ausgewahlete Area", null, []);
     }
 
     /**
@@ -76,7 +76,7 @@ class RotateCommand extends BuilderToolsCommand {
         /** @var Copier $copier */
         $copier = BuilderTools::getEditor(Editor::COPIER);
         if(!isset($copier->copiedClipboards[$sender->getName()])) {
-            $sender->sendMessage(BuilderTools::getPrefix() . "§cUse //copy first!");
+            $sender->sendMessage(BuilderTools::getPrefix() . "§cnehm //copy zuers!");
             return;
         }
 
@@ -92,6 +92,6 @@ class RotateCommand extends BuilderToolsCommand {
             }
         }
 
-        $sender->sendMessage(BuilderTools::getPrefix() . "§aSelected are have been successfully rotated (in " . (string)round(microtime(true)-$startTime, 2) . " sec)!");
+        $sender->sendMessage(BuilderTools::getPrefix() . "§aAusgewahle Area Wurde erfullgreich Gedreht : (in " . (string)round(microtime(true)-$startTime, 2) . " sec)!");
     }
 }
