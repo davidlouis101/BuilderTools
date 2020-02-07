@@ -38,7 +38,7 @@ class PasteCommand extends BuilderToolsCommand {
      * PasteCommand constructor.
      */
     public function __construct() {
-        parent::__construct("/paste", "Paste copied area", null, []);
+        parent::__construct("/paste", "Kopierten Bereich einfügen", null, []);
     }
 
     /**
@@ -57,6 +57,6 @@ class PasteCommand extends BuilderToolsCommand {
         /** @var Copier $copier */
         $copier = BuilderTools::getEditor(Editor::COPIER);
         $copier->paste($sender);
-        $sender->sendMessage(BuilderTools::getPrefix()."§aCopied area successfully pasted!");
+        $sender->sendMessage(BuilderTools::getPrefix()."§aKopierter Bereich erfolgreich eingefügt!");
     }
 }
