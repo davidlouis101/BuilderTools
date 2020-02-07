@@ -36,7 +36,7 @@ class FirstPositionCommand extends BuilderToolsCommand {
      * FirstPositionCommand constructor.
      */
     public function __construct() {
-        parent::__construct("/pos1", "Select first position", null, ["/1"]);
+        parent::__construct("/pos1", "Erste Pos Gesetz", null, ["/1"]);
     }
 
     /**
@@ -53,6 +53,6 @@ class FirstPositionCommand extends BuilderToolsCommand {
             return;
         }
         Selectors::addSelector($sender, 1, $position = new Position((int)round($sender->getX()), (int)round($sender->getY()), (int)round($sender->getZ()), $sender->getLevel()));
-        $sender->sendMessage(BuilderTools::getPrefix()."§aSelected first position at {$position->getX()}, {$position->getY()}, {$position->getZ()}");
+        $sender->sendMessage(BuilderTools::getPrefix()."§aAusgewählte erste Stelle bei {$position->getX()}, {$position->getY()}, {$position->getZ()}");
     }
 }
