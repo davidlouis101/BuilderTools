@@ -36,7 +36,7 @@ class UndoCommand extends BuilderToolsCommand {
      * UndoCommand constructor.
      */
     public function __construct() {
-        parent::__construct("/undo", "Undo last BuilderTools actions", null, []);
+        parent::__construct("/undo", "Loscht Die Letzen BuilderTool", null, []);
     }
 
     /**
@@ -61,7 +61,7 @@ class UndoCommand extends BuilderToolsCommand {
             return;
         }
 
-        if($step->useOn($sender)) $sender->sendMessage(BuilderTools::getPrefix()."§aStep was cancelled!");
+        if($step->useOn($sender)) $sender->sendMessage(BuilderTools::getPrefix()."§aEs Wurde Zuruckgesetz!");
     }
 
 }
