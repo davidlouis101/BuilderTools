@@ -36,7 +36,7 @@ class StackCommand extends BuilderToolsCommand {
      * StackCommand constructor.
      */
     public function __construct() {
-        parent::__construct("/stack", "Stack copied area", null, []);
+        parent::__construct("/stack", "Stackt Die Koppierte Arena", null, []);
     }
 
     /**
@@ -57,7 +57,7 @@ class StackCommand extends BuilderToolsCommand {
             return;
         }
         if(!is_numeric($args[0])) {
-            $sender->sendMessage(BuilderTools::getPrefix() . "§cType number!");
+            $sender->sendMessage(BuilderTools::getPrefix() . "§cWahle eine Nummer!");
             return;
         }
 
