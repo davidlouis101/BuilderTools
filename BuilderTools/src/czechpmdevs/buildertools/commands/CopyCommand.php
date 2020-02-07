@@ -37,7 +37,7 @@ class CopyCommand extends BuilderToolsCommand {
      * CopyCommand constructor.
      */
     public function __construct() {
-        parent::__construct("/copy", "Copy selected area", null, []);
+        parent::__construct("/copy", "Kopieren Sie den ausgewählten Bereich", null, []);
     }
 
     /**
