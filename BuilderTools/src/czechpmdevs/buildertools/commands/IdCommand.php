@@ -34,7 +34,7 @@ class IdCommand extends BuilderToolsCommand {
      * IdCommand constructor.
      */
     public function __construct() {
-        parent::__construct("/id", "Send id of item in your hands", null, []);
+        parent::__construct("/id", "Sendet die Id in deiner Hand", null, []);
     }
 
     /**
