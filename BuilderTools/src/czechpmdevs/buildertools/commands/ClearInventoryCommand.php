@@ -35,7 +35,7 @@ class ClearInventoryCommand extends BuilderToolsCommand {
      * ClearInventoryCommand constructor.
      */
     public function __construct() {
-        parent::__construct("/clearinventory", "Clear inventory", null, ["/ci"]);
+        parent::__construct("/clearinventory", "Clear Dein\Andern INV", null, ["/ci"]);
     }
 
     public function execute(CommandSender $sender, string $commandLabel, array $args) {
@@ -51,6 +51,6 @@ class ClearInventoryCommand extends BuilderToolsCommand {
             $removed++;
         }
 
-        $sender->sendMessage(BuilderTools::getPrefix()."§aInventory cleared, $removed items removed.");
+        $sender->sendMessage(BuilderTools::getPrefix()."§aINV Geloscht, $removed items wurden Entfernt.");
     }
 }
