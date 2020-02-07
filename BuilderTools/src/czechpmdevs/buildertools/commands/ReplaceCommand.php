@@ -36,7 +36,7 @@ class ReplaceCommand extends BuilderToolsCommand {
      * ReplaceCommand constructor.
      */
     public function __construct() {
-        parent::__construct("/replace", "Replace selected blocks", null, []);
+        parent::__construct("/replace", "Ersetzen Sie ausgewählte Blöcke", null, []);
     }
 
     /**
@@ -57,17 +57,17 @@ class ReplaceCommand extends BuilderToolsCommand {
             return;
         }
         if(!Selectors::isSelected(1, $sender)) {
-            $sender->sendMessage(BuilderTools::getPrefix()."§cFirst you need to select the first position.");
+            $sender->sendMessage(BuilderTools::getPrefix()."§cZuerst Brauchst du Pos1.");
             return;
         }
         if(!Selectors::isSelected(2, $sender)) {
-            $sender->sendMessage(BuilderTools::getPrefix()."§cFirst you need to select the second position.");
+            $sender->sendMessage(BuilderTools::getPrefix()."§cZerst brauchst du Pos2.");
             return;
         }
         $firstPos = Selectors::getPosition($sender, 1);
         $secondPos = Selectors::getPosition($sender, 2);
         if($firstPos->getLevel()->getName() != $secondPos->getLevel()->getName()) {
-            $sender->sendMessage(BuilderTools::getPrefix()."§cPositions must be in same level");
+            $sender->sendMessage(BuilderTools::getPrefix()."§cDie Positionen müssen sich auf derselben Ebene befinden");
             return;
         }
 
@@ -82,6 +82,6 @@ class ReplaceCommand extends BuilderToolsCommand {
         $result = $filler->fill($sender, $list);
 
         $count = $result->countBlocks;
-        $sender->sendMessage(BuilderTools::getPrefix()."§aSelected area filled in ".round(microtime(true)-$startTime, 2)." ({$count} blocks changed)!");
+        $sender->sendMessage(BuilderTools::getPrefix()."§aAusgewaglte Arena wudde gefilld ".round(microtime(true)-$startTime, 2)." ({$count} blocke Geandert)!");
     }
 }
