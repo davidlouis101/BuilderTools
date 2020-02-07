@@ -39,7 +39,7 @@ class TreeCommand extends BuilderToolsCommand {
      * TreeCommand constructor.
      */
     public function __construct() {
-        parent::__construct("/tree", "Place tree object", null, []);
+        parent::__construct("/tree", "Platziert Einen Baum", null, []);
     }
 
     /**
@@ -57,12 +57,12 @@ class TreeCommand extends BuilderToolsCommand {
         }
 
         if(!isset($args[0])) {
-            $sender->sendMessage("§cUsage: §7/tree <list|treeType>");
+            $sender->sendMessage("§cRichtig: §7/tree <list|treeType>");
             return;
         }
 
         if(strtolower($args[0]) == "list") {
-            $sender->sendMessage(BuilderTools::getPrefix()."§aTree list: Birch, Oak, Jungle, Spruce");
+            $sender->sendMessage(BuilderTools::getPrefix()."§aBaum Liste: Birch, Oak, Jungle, Spruce");
             return;
         }
 
@@ -84,11 +84,11 @@ class TreeCommand extends BuilderToolsCommand {
         }
 
         if($object === null) {
-            $sender->sendMessage(BuilderTools::getPrefix()."§cObject {$args[0]} does not found!");
+            $sender->sendMessage(BuilderTools::getPrefix()."§cObject {$args[0]} Wurde Nicht Gefunden!");
             return;
         }
 
         $object->placeObject($sender->getLevel(), (int)$sender->getX(), (int)$sender->getY(), (int)$sender->getZ(), new Random($sender->getLevel()->getSeed()));
-        $sender->sendMessage(BuilderTools::getPrefix()."§aObject {$args[0]} placed!");
+        $sender->sendMessage(BuilderTools::getPrefix()."§aObject {$args[0]} Platziert!");
     }
 }
