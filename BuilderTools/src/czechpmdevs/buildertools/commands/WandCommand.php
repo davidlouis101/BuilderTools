@@ -38,7 +38,7 @@ class WandCommand extends BuilderToolsCommand {
      * WandCommand constructor.
      */
     public function __construct() {
-        parent::__construct("/wand", "Switch wand tool", null, []);
+        parent::__construct("/wand", "Zauberstab wechseln", null, []);
     }
 
     /**
@@ -60,11 +60,11 @@ class WandCommand extends BuilderToolsCommand {
             $item->setCustomName(BuilderTools::getConfiguration()["items"]["wand-axe"]["name"]);
             $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment(50), 1));
             $sender->getInventory()->addItem($item);
-            $sender->sendMessage(BuilderTools::getPrefix() . "§aWand axe added to your inventory!");
+            $sender->sendMessage(BuilderTools::getPrefix() . "§aZauberstabaxt wurde zu deinem Inventar hinzugefügt!");
             return;
         }
         Selectors::switchWandSelector($sender);
-        $switch = Selectors::isWandSelector($sender) ? "ON" : "OFF";
-        $sender->sendMessage(BuilderTools::getPrefix()."§aWand tool turned {$switch}!");
+        $switch = Selectors::isWandSelector($sender) ? "An" : "Aus";
+        $sender->sendMessage(BuilderTools::getPrefix()."§aZauberstab gedreht {$switch}!");
     }
 }
