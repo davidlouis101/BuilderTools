@@ -36,7 +36,7 @@ class RedoCommand extends BuilderToolsCommand {
      * UndoCommand constructor.
      */
     public function __construct() {
-        parent::__construct("/redo", "Redo last BuilderTools actions", null, []);
+        parent::__construct("/redo", "Letzte BuilderTools-Aktionen wiederholen", null, []);
     }
 
     /**
@@ -61,6 +61,6 @@ class RedoCommand extends BuilderToolsCommand {
             return;
         }
 
-        if($step->useOn($sender)) $sender->sendMessage(BuilderTools::getPrefix() . "§aUndo was cancelled!");
+        if($step->useOn($sender)) $sender->sendMessage(BuilderTools::getPrefix() . "§aRückgängig wurde abgebrochen!");
     }
 }
