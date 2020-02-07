@@ -38,7 +38,7 @@ class BlockInfoCommand extends BuilderToolsCommand {
      * ReplaceCommand constructor.
      */
     public function __construct() {
-        parent::__construct("/blockinfo", "Blockinfo-Modus wechseln", null, ["/bi", "/debug"]);
+        parent::__construct("/blockinfo", "Blockinfo-Modus wechseln!!!", null, ["/bi", "/debug"]);
     }
 
     /**
